@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><configuration>
+<property><name>validation.database.target.url</name><value>jdbc:phoenix:car-01</value><source>programatically</source></property>
+<property><name>validation.database.source.url</name><value>jdbc:sqlserver://192.168.103.130:49172;databaseName=chia7712;user=chia7712;password=jellynina;</value><source>programatically</source></property>
+<property><name>validation.output.table.name</name><value>DEVICES_T2</value><source>programatically</source></property>
+<property><name>validation.input.table.name</name><value>DEVICES_HISTORY</value><source>programatically</source></property>
+<property><name>validation.database.primarykey</name><value>XDH_NO</value><source>programatically</source></property>
+<property><name>validation.mr.process.number</name><value>5</value><source>programatically</source></property>
+</configuration>
