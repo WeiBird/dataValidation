@@ -1,0 +1,38 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+BIN_DIR="$( dirname "$SOURCE" )"
+while [ -h "$SOURCE" ]
+do
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+  BIN_DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+done
+BIN_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+LIB_DIR="$(dirname "$BIN_DIR")"
+
+CLASSPATH=$( { hadoop classpath; } 2>&1 ):$( { hbase classpath; } 2>&1 ):$LIB_DIR'/lib/*:'
+CLASS=''
+JARS=''
+JAVA='java -cp'
+TMP_JARS='-libjars '
+for entry in "$LIB_DIR"/lib/*
+do
+    TMP_JARS=$TMP_JARS$entry","
+done
+
+# main class
+CLASS="com.cdclab.datavalidation.ValidateSql"
+JARS=$TMP_JARS
+
+ARGS=""
+# shift 1
+i=0
+while [ -n "$1" ]
+do
+	ARGS=$ARGS" "$1
+	i=$(($i+1))
+	shift
+done
+#echo $JAVA $CLASSPATH $LOG4J $CLASS $JARS $ARGS
+exec $JAVA $CLASSPATH $CLASS $JARS $ARGS
